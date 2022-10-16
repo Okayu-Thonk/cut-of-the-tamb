@@ -58,3 +58,5 @@ autoplay = true
 autoplay = "fade_in"
 anims/RESET = SubResource( 1 )
 anims/fade_in = SubResource( 2 )
+
+[connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_AudioStreamPlayer2D_finished"]
