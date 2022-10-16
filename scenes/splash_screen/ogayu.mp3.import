@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ogayu.mp3-2624a8e1a2ea5e5b6d93837908b23a03.mp3str"
+
+[deps]
+
+source_file="res://scenes/splash_screen/ogayu.mp3"
+dest_files=[ "res://.import/ogayu.mp3-2624a8e1a2ea5e5b6d93837908b23a03.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
