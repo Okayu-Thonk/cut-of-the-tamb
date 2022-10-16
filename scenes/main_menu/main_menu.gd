@@ -10,4 +10,7 @@ func _on_ExitButton_pressed():
 
 func _on_PlayButton_pressed():
   get_tree().change_scene("res://levels/test_scene.tscn")
+  
+func _on_OpenButton_pressed():
+ get_tree().
 
