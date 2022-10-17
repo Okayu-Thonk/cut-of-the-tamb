@@ -40,10 +40,10 @@ position = Vector2( 154, 88 )
 script = ExtResource( 3 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_left = -311.0
-margin_top = -161.0
-margin_right = 291.0
-margin_bottom = 170.0
+margin_left = -154.0
+margin_top = -88.0
+margin_right = 166.0
+margin_bottom = 96.0
 
 [node name="Logo" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0 )
