@@ -7,23 +7,30 @@ onready var health_bar = $CanvasLayer/Control/VBoxContainer/ProgressBar
 
 
 func _ready():
-  health_bar.value = health
+	var _x = GlobalSignal.connect("enemy_spawned", self, "_on_enemy_spawned")
+	health_bar.value = health
+
 
 func set_health(new_health: int) -> void:
-  if new_health == 0:
-    destroyed()
-    return
-  health = new_health
-  health_bar.value = health
+	if new_health == 0:
+		destroyed()
+		return
+	health = new_health
+	health_bar.value = health
 
 
 func destroyed() -> void:
-  GlobalSignal.emit_signal("ritual_destroyed")
+	GlobalSignal.emit_signal("ritual_destroyed")
+
 
 func generate_faith() -> void:
-  GlobalSignal.emit_signal("faith_generated", faith_per_second)
-  
+	GlobalSignal.emit_signal("faith_generated", faith_per_second)
+
 
 func _on_FaithTimer_timeout():
-  generate_faith()
+	generate_faith()
 
+
+func _on_enemy_spawned(type: String):
+	print("enemy spawned" + type)
+	GlobalSignal.emit_signal("ritual_coordinate_sent", self.global_position)
