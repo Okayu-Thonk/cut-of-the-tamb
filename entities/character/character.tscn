@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://entities/character/character.gd" type="Script" id=1]
 [ext_resource path="res://entities/character/character.png" type="Texture" id=2]
+[ext_resource path="res://assets/theme.tres" type="Theme" id=3]
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 5.09902
@@ -82,3 +83,15 @@ current = true
 zoom = Vector2( 1.7, 1.7 )
 smoothing_enabled = true
 smoothing_speed = 8.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 3 )
+
+[node name="FaithLabel" type="Label" parent="CanvasLayer/Control"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Faith: 20"

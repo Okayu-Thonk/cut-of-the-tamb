@@ -152,6 +152,7 @@
 0/z_index = 0
 
 [node name="LevelOne" instance=ExtResource( 1 )]
+stage_time_in_seconds = 10
 
 [node name="CanvasModulate" parent="." index="0"]
 color = Color( 0.541176, 0.572549, 1, 1 )
@@ -174,3 +175,6 @@ energy = 0.58
 range_height = -92.4
 
 [node name="Ritual" parent="." index="5" instance=ExtResource( 6 )]
+
+[node name="StageTimer" parent="." index="9"]
+autostart = false

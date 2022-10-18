@@ -29,12 +29,17 @@ margin_bottom = 1.0
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
 margin_right = 236.0
-margin_bottom = 13.0
+margin_bottom = 7.0
 text = "Ritual Health"
 align = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control/VBoxContainer"]
-margin_top = 17.0
+margin_top = 11.0
 margin_right = 236.0
-margin_bottom = 30.0
+margin_bottom = 18.0
 max_value = 10000.0
+
+[node name="FaithTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="FaithTimer" to="." method="_on_FaithTimer_timeout"]

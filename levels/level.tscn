@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://levels/level.gd" type="Script" id=1]
+[ext_resource path="res://assets/theme.tres" type="Theme" id=2]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 1 )
@@ -17,3 +18,97 @@ format = 1
 [node name="YSort" type="YSort" parent="."]
 
 [node name="lights" type="Node2D" parent="."]
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Control" type="Control" parent="GameOver"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="GameOver/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.345098, 0.345098, 0.345098, 0.345098 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="GameOver/Control/VBoxContainer"]
+margin_right = 40.0
+margin_bottom = 7.0
+text = "You Failed"
+align = 1
+
+[node name="ContinueButton" type="Button" parent="GameOver/Control/VBoxContainer"]
+margin_top = 11.0
+margin_right = 40.0
+margin_bottom = 24.0
+text = "Retry"
+
+[node name="ExitButton" type="Button" parent="GameOver/Control/VBoxContainer"]
+margin_top = 28.0
+margin_right = 40.0
+margin_bottom = 41.0
+text = "Exit"
+
+[node name="Win" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Control" type="Control" parent="Win"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="Win/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.345098, 0.345098, 0.345098, 0.345098 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Win/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="Win/Control/VBoxContainer"]
+margin_right = 45.0
+margin_bottom = 7.0
+text = "Stage Completed"
+
+[node name="ContinueButton" type="Button" parent="Win/Control/VBoxContainer"]
+margin_top = 11.0
+margin_right = 45.0
+margin_bottom = 24.0
+text = "Continue"
+
+[node name="ExitButton" type="Button" parent="Win/Control/VBoxContainer"]
+margin_top = 28.0
+margin_right = 45.0
+margin_bottom = 41.0
+text = "Exit"
+
+[node name="Pause" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="Pause"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="StageTimer" type="Timer" parent="."]
+wait_time = 120.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="StageTimer" to="." method="_on_StageTimer_timeout"]
