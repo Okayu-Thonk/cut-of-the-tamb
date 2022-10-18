@@ -14,6 +14,10 @@ config/name="Cut of the tamb"
 run/main_scene="res://scenes/splash_screen/splash.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GlobalSignal="*res://autoload/global_signal.gd"
+
 [display]
 
 window/size/width=320

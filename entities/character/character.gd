@@ -5,15 +5,23 @@ export var friction = 0.7
 
 onready var animation: AnimationPlayer = $Animation
 onready var sprite: Sprite = $Sprite
-var movement_key: Dictionary = {"up": false, "down": false, "left": false, "right": false}
+onready var faith_label: Label = $CanvasLayer/Control/FaithLabel
 
+var movement_key: Dictionary = {"up": false, "down": false, "left": false, "right": false}
 var velocity: Vector2 = Vector2.ZERO
+var faith: int  = 0
+
+func _ready()->void:
+  GlobalSignal.connect("faith_generated", self ,"_on_faith_generated")
+
+func _on_faith_generated(faith_generated_count: int)->void:
+  faith += faith_generated_count
+  faith_label.text = "Faith: " + var2str(faith)
 
 
 func _process(delta):
 	move(delta)
 	_sprite_handler()
-
 
 func _unhandled_input(event):
 	listen_to_input_direction(event)
