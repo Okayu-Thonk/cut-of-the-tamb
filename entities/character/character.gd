@@ -9,23 +9,28 @@ var movement_key: Dictionary = {"up": false, "down": false, "left": false, "righ
 
 var velocity: Vector2 = Vector2.ZERO
 
+
 func _process(delta):
-  move(delta)
-  _sprite_handler()
+	move(delta)
+	_sprite_handler()
+
 
 func _unhandled_input(event):
-  listen_to_input_direction(event)
+	listen_to_input_direction(event)
+
 
 func _sprite_handler():
-  var mouse_direction: Vector2 = get_mouse_direction()
-  if velocity.length() > 10:
-	  animation.play("move")
-  else:
-	  animation.play("idle")
-  _flip_character_sprite(mouse_direction)
+	var mouse_direction: Vector2 = get_mouse_direction()
+	if velocity.length() > 10:
+		animation.play("move")
+	else:
+		animation.play("idle")
+	_flip_character_sprite(mouse_direction)
+
 
 func get_mouse_direction() -> Vector2:
-  return (get_global_mouse_position() - global_position).normalized()
+	return (get_global_mouse_position() - global_position).normalized()
+
 
 func move(delta: float) -> void:
 	var input_direction: Vector2 = get_input_direction()
@@ -34,32 +39,11 @@ func move(delta: float) -> void:
 	velocity = lerp(velocity, Vector2.ZERO, friction)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 func _flip_character_sprite(mouse_direction):
-  if mouse_direction.x < 0 and sign(sprite.scale.x) != sign(mouse_direction.x):
-	  sprite.scale.x *= -1
-  elif mouse_direction.x > 0 and sign(sprite.scale.x) != sign(mouse_direction.x):
-	  sprite.scale.x *= -1
-
-
-
-
-
-
+	if mouse_direction.x < 0 and sign(sprite.scale.x) != sign(mouse_direction.x):
+		sprite.scale.x *= -1
+	elif mouse_direction.x > 0 and sign(sprite.scale.x) != sign(mouse_direction.x):
+		sprite.scale.x *= -1
 
 
 func listen_to_input_direction(event) -> void:
