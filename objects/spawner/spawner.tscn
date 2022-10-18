@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 519, 13, 0, 0, 0, 0, 521, 160, 0, 0, 0, 0, 560, 165, 0, 0, 0, 0, 562, 20, 0, 0, 0, 0, 519, 13 )
+}
+
+[node name="Spawner" type="Path2D"]
+curve = SubResource( 1 )
+
+[node name="SpawnerLocation" type="PathFollow2D" parent="."]
+position = Vector2( 519, 13 )
+rotation = 1.5572
