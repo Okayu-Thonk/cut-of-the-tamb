@@ -79,6 +79,6 @@ anims/move = SubResource( 5 )
 
 [node name="Camera" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 2, 2 )
+zoom = Vector2( 1.7, 1.7 )
 smoothing_enabled = true
 smoothing_speed = 8.0
