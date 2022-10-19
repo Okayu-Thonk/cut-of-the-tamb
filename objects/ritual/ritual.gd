@@ -38,5 +38,6 @@ func _on_enemy_spawned(type: String):
 
 func _on_Hurtbox_area_entered(area:Area2D):
   set_health(health-10)
+  area.queue_free()
 
 
