@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "HereticRanged",
 "language": "GDScript",
 "path": "res://entities/enemies/heretic_ranged/heretic_ranged.gd"
+}, {
+"base": "Area2D",
+"class": "SingleTarget",
+"language": "GDScript",
+"path": "res://entities/enemies/heretic_ranged/heretic_ranged_projectile.gd"
 } ]
 _global_script_class_icons={
 "Character": "",
-"HereticRanged": ""
+"HereticRanged": "",
+"SingleTarget": ""
 }
 
 [application]

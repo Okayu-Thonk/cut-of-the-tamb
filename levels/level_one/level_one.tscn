@@ -151,6 +151,7 @@
 0/z_index = 0
 
 [node name="LevelOne" instance=ExtResource( 1 )]
+stage_time_in_seconds = 10
 
 [node name="CanvasModulate" parent="." index="0"]
 color = Color( 0.541176, 0.572549, 1, 1 )
@@ -161,10 +162,9 @@ tile_data = PoolIntArray( -720913, 8, 0, -720912, 8, 0, -720911, 8, 0, -720910, 
 
 [node name="Props" parent="." index="2"]
 tile_set = SubResource( 2 )
-tile_data = PoolIntArray( 0, 0, 0 )
 
 [node name="Ritual" parent="." index="3"]
-position = Vector2( 49, 48 )
+position = Vector2( 162, 97 )
 
 [node name="Character" parent="YSort" index="0" instance=ExtResource( 5 )]
 
@@ -174,6 +174,9 @@ texture = ExtResource( 3 )
 texture_scale = 1.51
 energy = 0.58
 range_height = -92.4
+
+[node name="Control" parent="Warning" index="0"]
+mouse_filter = 2
 
 [node name="StageTimer" parent="." index="10"]
 autostart = false
