@@ -13,6 +13,7 @@ var velocity: Vector2 = Vector2.ZERO
 var faith: int = 0
 
 
+# warning-ignore-all:return_value_discarded
 func _ready() -> void:
 	GlobalSignal.connect("faith_generated", self, "_on_faith_generated")
 
