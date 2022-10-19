@@ -34,3 +34,9 @@ func _on_FaithTimer_timeout():
 func _on_enemy_spawned(type: String):
 	print("enemy spawned" + type)
 	GlobalSignal.emit_signal("ritual_coordinate_sent", self.global_position)
+
+
+func _on_Hurtbox_area_entered(area:Area2D):
+  set_health(health-10)
+
+
