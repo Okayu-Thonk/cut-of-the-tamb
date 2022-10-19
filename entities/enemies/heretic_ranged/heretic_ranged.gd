@@ -52,14 +52,16 @@ func _on_coord_received(coord: Vector2) -> void:
 
 
 func _flip_character_sprite(ritual_direction):
-	if ritual_direction.x < 0 and sign(sprite.scale.x) != sign(ritual_direction.x):
-		weapon.scale.x *= -1
-		sprite.scale.x *= -1
-		weapon.position.x *= -1
-	elif ritual_direction.x > 0 and sign(sprite.scale.x) != sign(ritual_direction.x):
-		weapon.scale.x *= -1
-		sprite.scale.x *= -1
-		weapon.position.x *= -1
+  if ritual_direction.x < 0 and sign(sprite.scale.x) != sign(ritual_direction.x):
+    weapon.scale.x *= -1
+    sprite.scale.x *= -1
+  elif ritual_direction.x > 0 and sign(sprite.scale.x) != sign(ritual_direction.x):
+    weapon.scale.x *= -1
+    sprite.scale.x *= -1
+  if ritual_direction.x > 0:
+    weapon.position.x = 11
+  else:
+    weapon.position.x = -11
 
 func get_ritual_direction() -> Vector2:
-	return (ritual_coordinate - global_position).normalized()
+  return (ritual_coordinate - global_position).normalized()
