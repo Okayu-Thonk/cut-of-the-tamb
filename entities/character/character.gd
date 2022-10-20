@@ -9,10 +9,13 @@ export var acceleration: int = 100
 onready var sprite: Sprite = $Sprite
 onready var animation: AnimationPlayer = $Animation
 onready var faith_label: Label = $CanvasLayer/Control/FaithLabel
+onready var weapon_container: Node2D = $Weapon
 
 var movement_key: Dictionary = {"up": false, "down": false, "left": false, "right": false}
 var velocity: Vector2 = Vector2.ZERO
 var faith: int = 0
+
+var selected_weapon: int = 1
 
 
 func _ready() -> void:
@@ -25,6 +28,22 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("1"):
+		selected_weapon = 1
+		weapon_container.get_node("Tambourine").visible = true
+		weapon_container.get_node("BuildTower").visible = false
+	elif event.is_action_pressed("2"):
+		selected_weapon = 2
+		weapon_container.get_node("Tambourine").visible = false
+		weapon_container.get_node("BuildTower").visible = true
+	if event.is_action_pressed("attack"):
+		if selected_weapon == 2 and faith > 150:
+			faith -= 150
+			weapon_container.get_node("BuildTower").light_attack(
+				weapon_container.get_node("BuildTower/Sprite").global_position
+			)
+		elif selected_weapon == 1:
+			weapon_container.get_node("Tambourine").light_attack()
 	_listen_to_input_direction(event)
 
 
@@ -81,8 +100,10 @@ func _sprite_handler() -> void:
 func _flip_character_sprite(mouse_direction: Vector2) -> void:
 	if mouse_direction.x < 0 and sign(sprite.scale.x) != sign(mouse_direction.x):
 		sprite.scale.x *= -1
+		weapon_container.scale.x *= -1
 	elif mouse_direction.x > 0 and sign(sprite.scale.x) != sign(mouse_direction.x):
 		sprite.scale.x *= -1
+		weapon_container.scale.x *= -1
 
 
 func _animation_handler() -> void:
@@ -97,10 +118,18 @@ func _animation_handler() -> void:
 #########
 
 
+func get_class() -> String:
+	return "Character"
+
+
 func _get_mouse_direction() -> Vector2:
 	return (get_global_mouse_position() - global_position).normalized()
 
 
 func _on_faith_generated(faith_generated_count: int) -> void:
 	faith += faith_generated_count
+	if faith < 150:
+		weapon_container.get_node("BuildTower").place_color = Color.red
+	else:
+		weapon_container.get_node("BuildTower").place_color = Color.green
 	faith_label.text = "Faith: " + var2str(faith)

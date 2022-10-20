@@ -1,4 +1,5 @@
-extends Node2D
+extends StaticBody2D
+class_name Tower
 
 export var projectile: PackedScene
 
@@ -21,7 +22,8 @@ func _on_AttackInterval_timeout() -> void:
 
 
 func _on_Range_body_entered(body: Node):
-  enemies.append(body)
+  if body.get_class()!="Character":
+    enemies.append(body)
 
 
 func _on_Range_body_exited(body: Node):

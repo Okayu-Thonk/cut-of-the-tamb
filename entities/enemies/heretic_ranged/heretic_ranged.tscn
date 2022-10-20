@@ -96,6 +96,8 @@ tracks/1/keys = {
 [sub_resource type="RectangleShape2D" id=5]
 
 [node name="HereticRanged" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 17
 script = ExtResource( 3 )
 projectile = ExtResource( 4 )
 
@@ -124,6 +126,8 @@ wait_time = 2.0
 autostart = true
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 32
 __meta__ = {
 "_edit_lock_": true
 }

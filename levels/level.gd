@@ -3,6 +3,7 @@ class_name Level
 
 export var stage_time_in_seconds = 120
 
+onready var ysort: YSort = $YSort
 onready var north: Node2D = $North
 onready var west: Node2D = $West
 onready var east: Node2D = $East
