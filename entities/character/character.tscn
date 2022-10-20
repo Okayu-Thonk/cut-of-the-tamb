@@ -94,4 +94,4 @@ theme = ExtResource( 3 )
 [node name="FaithLabel" type="Label" parent="CanvasLayer/Control"]
 margin_right = 40.0
 margin_bottom = 14.0
-text = "Faith: 20"
+text = "Faith: 0"
