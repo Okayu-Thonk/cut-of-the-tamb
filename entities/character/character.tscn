@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://entities/character/character.gd" type="Script" id=1]
 [ext_resource path="res://entities/character/character.png" type="Texture" id=2]
 [ext_resource path="res://assets/theme.tres" type="Theme" id=3]
+[ext_resource path="res://objects/weapons/tambourine/tambourine.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/weapons/build_tower/build_tower.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 5.09902
@@ -21,6 +23,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [ 0 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Weapon:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "idle"
@@ -37,6 +51,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Weapon:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 1 ), Vector2( 0, 0 ) ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -55,8 +81,21 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 4, 5, 6, 7 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Weapon:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 1 ), Vector2( 0, 0 ) ]
+}
 
 [node name="Character" type="KinematicBody2D"]
+collision_mask = 22
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -89,9 +128,16 @@ smoothing_speed = 8.0
 [node name="Control" type="Control" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 theme = ExtResource( 3 )
 
 [node name="FaithLabel" type="Label" parent="CanvasLayer/Control"]
 margin_right = 40.0
 margin_bottom = 14.0
 text = "Faith: 0"
+
+[node name="Weapon" type="Node2D" parent="."]
+
+[node name="Tambourine" parent="Weapon" instance=ExtResource( 4 )]
+
+[node name="BuildTower" parent="Weapon" instance=ExtResource( 5 )]

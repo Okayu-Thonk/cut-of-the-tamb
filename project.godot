@@ -33,13 +33,37 @@ _global_script_classes=[ {
 "class": "SingleTarget",
 "language": "GDScript",
 "path": "res://entities/enemies/heretic_ranged/heretic_ranged_projectile.gd"
+}, {
+"base": "Node2D",
+"class": "Tambourine",
+"language": "GDScript",
+"path": "res://objects/weapons/tambourine/tambourine.gd"
+}, {
+"base": "Area2D",
+"class": "TambourineProjectile",
+"language": "GDScript",
+"path": "res://objects/weapons/tambourine/tambourine_projectile.gd"
+}, {
+"base": "StaticBody2D",
+"class": "Tower",
+"language": "GDScript",
+"path": "res://objects/towers/tower.gd"
+}, {
+"base": "Area2D",
+"class": "TowerProjectile",
+"language": "GDScript",
+"path": "res://objects/towers/tower_projectile.gd"
 } ]
 _global_script_class_icons={
 "Character": "",
 "HereticRanged": "",
 "Level": "",
 "Ritual": "",
-"SingleTarget": ""
+"SingleTarget": "",
+"Tambourine": "",
+"TambourineProjectile": "",
+"Tower": "",
+"TowerProjectile": ""
 }
 
 [application]
@@ -111,6 +135,30 @@ right={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
+attack={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+1={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":49,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+2={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":50,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[layer_names]
+
+2d_physics/layer_1="player"
+2d_physics/layer_2="enemy"
+2d_physics/layer_3="enemy_projectile"
+2d_physics/layer_4="ritual"
+2d_physics/layer_5="tower"
+2d_physics/layer_6="tower_projectile"
 
 [physics]
 

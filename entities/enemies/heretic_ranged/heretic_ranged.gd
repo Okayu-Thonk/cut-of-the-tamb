@@ -69,8 +69,10 @@ func _on_AttackTimer_timeout() -> void:
 		projectile_instance.launch()
 
 
-func _on_Area2D_area_entered(_area: Area2D) -> void:
-	set_health(hp - 3)
+func _on_Area2D_area_entered(area: Area2D) -> void:
+  if(area.get_class()!="TowerRange"):
+    set_health(hp - 3)
+    area.queue_free()
 
 
 ##########
