@@ -1,11 +1,13 @@
 extends KinematicBody2D
 class_name Character
 
-export var acceleration = 100
-export var friction = 0.7
+# warning-ignore-all:return_value_discarded
 
-onready var animation: AnimationPlayer = $Animation
+export var friction: float = 0.7
+export var acceleration: int = 100
+
 onready var sprite: Sprite = $Sprite
+onready var animation: AnimationPlayer = $Animation
 onready var faith_label: Label = $CanvasLayer/Control/FaithLabel
 
 var movement_key: Dictionary = {"up": false, "down": false, "left": false, "right": false}
@@ -13,53 +15,40 @@ var velocity: Vector2 = Vector2.ZERO
 var faith: int = 0
 
 
-# warning-ignore-all:return_value_discarded
 func _ready() -> void:
 	GlobalSignal.connect("faith_generated", self, "_on_faith_generated")
 
 
-func _on_faith_generated(faith_generated_count: int) -> void:
-	faith += faith_generated_count
-	faith_label.text = "Faith: " + var2str(faith)
-
-
-func _process(delta):
-	move(delta)
+func _process(delta: float) -> void:
+	_move(delta)
 	_sprite_handler()
 
 
-func _unhandled_input(event):
-	listen_to_input_direction(event)
+func _unhandled_input(event: InputEvent) -> void:
+	_listen_to_input_direction(event)
 
 
-func _sprite_handler():
-	var mouse_direction: Vector2 = get_mouse_direction()
-	if velocity.length() > 10:
-		animation.play("move")
-	else:
-		animation.play("idle")
-	_flip_character_sprite(mouse_direction)
+############
+# Movement #
+############
 
 
-func get_mouse_direction() -> Vector2:
-	return (get_global_mouse_position() - global_position).normalized()
-
-
-func move(delta: float) -> void:
-	var input_direction: Vector2 = get_input_direction()
+func _move(delta: float) -> void:
+	var input_direction: Vector2 = _get_input_direction()
 	velocity = move_and_slide(velocity)
 	velocity += acceleration * input_direction * delta * 60
 	velocity = lerp(velocity, Vector2.ZERO, friction)
 
 
-func _flip_character_sprite(mouse_direction):
-	if mouse_direction.x < 0 and sign(sprite.scale.x) != sign(mouse_direction.x):
-		sprite.scale.x *= -1
-	elif mouse_direction.x > 0 and sign(sprite.scale.x) != sign(mouse_direction.x):
-		sprite.scale.x *= -1
+func _get_input_direction() -> Vector2:
+	var input_direction: Vector2 = Vector2.ZERO
+	input_direction.x = (int(movement_key["right"]) - int(movement_key["left"]))
+	input_direction.y = (int(movement_key["down"]) - int(movement_key["up"]))
+	input_direction = input_direction.normalized()
+	return input_direction
 
 
-func listen_to_input_direction(event) -> void:
+func _listen_to_input_direction(event) -> void:
 	if event.is_action_pressed("up"):
 		movement_key["up"] = true
 	if event.is_action_pressed("down"):
@@ -78,9 +67,40 @@ func listen_to_input_direction(event) -> void:
 		movement_key["right"] = false
 
 
-func get_input_direction() -> Vector2:
-	var input_direction: Vector2 = Vector2.ZERO
-	input_direction.x = (int(movement_key["right"]) - int(movement_key["left"]))
-	input_direction.y = (int(movement_key["down"]) - int(movement_key["up"]))
-	input_direction = input_direction.normalized()
-	return input_direction
+##########
+# Sprite #
+##########
+
+
+func _sprite_handler() -> void:
+	var mouse_direction: Vector2 = _get_mouse_direction()
+	_animation_handler()
+	_flip_character_sprite(mouse_direction)
+
+
+func _flip_character_sprite(mouse_direction: Vector2) -> void:
+	if mouse_direction.x < 0 and sign(sprite.scale.x) != sign(mouse_direction.x):
+		sprite.scale.x *= -1
+	elif mouse_direction.x > 0 and sign(sprite.scale.x) != sign(mouse_direction.x):
+		sprite.scale.x *= -1
+
+
+func _animation_handler() -> void:
+	if velocity.length() > 10:
+		animation.play("move")
+	else:
+		animation.play("idle")
+
+
+#########
+# Utils #
+#########
+
+
+func _get_mouse_direction() -> Vector2:
+	return (get_global_mouse_position() - global_position).normalized()
+
+
+func _on_faith_generated(faith_generated_count: int) -> void:
+	faith += faith_generated_count
+	faith_label.text = "Faith: " + var2str(faith)
