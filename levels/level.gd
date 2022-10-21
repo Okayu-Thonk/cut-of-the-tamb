@@ -1,6 +1,8 @@
 extends Node2D
 class_name Level
 
+# warning-ignore-all:return_value_discarded
+
 export var stage_time_in_seconds = 120
 
 onready var ysort: YSort = $YSort
@@ -31,7 +33,8 @@ var enemies: Array = [
 func _ready() -> void:
 	stage_timer.wait_time = stage_time_in_seconds
 	stage_timer.start()
-	var _x = GlobalSignal.connect("ritual_destroyed", self, "_on_gameover")
+	GlobalSignal.connect("ritual_destroyed", self, "_on_gameover")
+	GlobalSignal.connect("player_died", self, "_on_gameover")
 	spawn_locations = [north, west, east, south]
 	spawn_location = spawn_locations[0]
 

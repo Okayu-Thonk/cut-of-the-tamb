@@ -26,3 +26,7 @@ signal enemy_spawned(type)
 signal enemy_killed
 # Used For:
 
+# Emitted by: character
+signal player_died
+# Used For: ending the game
+
