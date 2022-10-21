@@ -7,6 +7,7 @@
 extents = Vector2( 2, 4 )
 
 [node name="Projectile" type="Area2D"]
+rotation = 4.71238
 collision_layer = 32
 collision_mask = 2
 script = ExtResource( 2 )
