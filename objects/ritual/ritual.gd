@@ -3,7 +3,7 @@ class_name Ritual
 
 # warning-ignore-all:return_value_discarded
 
-export var health: int = 100 setget set_health
+export var health: int = 1000 setget set_health
 export var faith_per_second: int = 10
 
 onready var health_bar: ProgressBar = $CanvasLayer/Control/VBoxContainer/ProgressBar
