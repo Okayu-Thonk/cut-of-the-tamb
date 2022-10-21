@@ -5,11 +5,17 @@ class_name Character
 
 export var friction: float = 0.7
 export var acceleration: int = 100
+export var hp: int = 10 setget set_hp
+export var max_hp: int = 10
 
 onready var sprite: Sprite = $Sprite
 onready var animation: AnimationPlayer = $Animation
-onready var faith_label: Label = $CanvasLayer/Control/FaithLabel
+onready var faith_label: Label = $CanvasLayer/Control/Container/FaithLabel
+onready var hp_bar: ProgressBar = $CanvasLayer/Control/Container/HpBar
+onready var hp_label: Label = $CanvasLayer/Control/Container/HpLabel
 onready var weapon_container: Node2D = $Weapon
+onready var tambourine_outline: TextureRect = get_node("%OutlineT")
+onready var hammer_outline: TextureRect = get_node("%OutlineH")
 
 var movement_key: Dictionary = {"up": false, "down": false, "left": false, "right": false}
 var velocity: Vector2 = Vector2.ZERO
@@ -19,6 +25,7 @@ var selected_weapon: int = 1
 
 
 func _ready() -> void:
+	_init_ui()
 	GlobalSignal.connect("faith_generated", self, "_on_faith_generated")
 
 
@@ -32,16 +39,22 @@ func _unhandled_input(event: InputEvent) -> void:
 		selected_weapon = 1
 		weapon_container.get_node("Tambourine").visible = true
 		weapon_container.get_node("BuildTower").visible = false
+		tambourine_outline.visible = true
+		hammer_outline.visible = false
 	elif event.is_action_pressed("2"):
 		selected_weapon = 2
 		weapon_container.get_node("Tambourine").visible = false
 		weapon_container.get_node("BuildTower").visible = true
+		tambourine_outline.visible = false
+		hammer_outline.visible = true
 	if event.is_action_pressed("attack"):
-		if selected_weapon == 2 and faith > 150:
+		if selected_weapon == 2 and faith >= 150:
 			faith -= 150
 			weapon_container.get_node("BuildTower").light_attack(
 				weapon_container.get_node("BuildTower/Sprite").global_position
 			)
+		elif selected_weapon == 2 and faith <150:
+			Ui.send_notif("Not Enough Faith bosq", global_position)
 		elif selected_weapon == 1:
 			weapon_container.get_node("Tambourine").light_attack()
 	_listen_to_input_direction(event)
@@ -87,6 +100,23 @@ func _listen_to_input_direction(event) -> void:
 
 
 ##########
+# Combat #
+##########
+
+
+func _on_Hurtbox_area_entered(area: Area2D):
+	if area.get_class() == "Projectile":
+		set_hp(hp - area.damage)
+
+
+func set_hp(new_hp: int) -> void:
+	hp = new_hp
+	if hp <= 0:
+		visible = false
+		GlobalSignal.emit_signal("player_died")
+
+
+##########
 # Sprite #
 ##########
 
@@ -120,6 +150,13 @@ func _animation_handler() -> void:
 
 func get_class() -> String:
 	return "Character"
+
+
+func _init_ui() -> void:
+	faith_label.text = "Faith: " + var2str(faith)
+	hp_label.text = "HP: " + var2str(hp) + "/" + var2str(max_hp)
+	hp_bar.max_value = max_hp
+	hp_bar.value = hp
 
 
 func _get_mouse_direction() -> Vector2:

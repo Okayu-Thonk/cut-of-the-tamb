@@ -13,6 +13,10 @@ var direction = Vector2.ZERO
 var ritual_coordinate: Vector2
 
 
+func get_class() -> String:
+  return "Projectile"
+
+
 func _process(delta: float) -> void:
 	global_position += speed * direction * delta
 
