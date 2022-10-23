@@ -2,6 +2,7 @@ extends Node2D
 
 # warning-ignore-all:return_value_discarded
 
+
 func _ready():
 	pass  # Replace with function body.
 

@@ -14,7 +14,7 @@ var ritual_coordinate: Vector2
 
 
 func get_class() -> String:
-  return "Projectile"
+	return "Projectile"
 
 
 func _process(delta: float) -> void:

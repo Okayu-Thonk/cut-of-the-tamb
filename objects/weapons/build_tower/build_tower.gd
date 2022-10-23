@@ -6,7 +6,8 @@ var place_color: Color
 
 
 func _process(_delta):
-  sprite.modulate = place_color
+	sprite.modulate = place_color
+
 
 func light_attack(origin) -> void:
 	var tower_instance = tower.instance()

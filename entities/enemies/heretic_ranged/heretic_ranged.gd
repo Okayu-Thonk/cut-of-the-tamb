@@ -70,9 +70,9 @@ func _on_AttackTimer_timeout() -> void:
 
 
 func _on_Area2D_area_entered(area: Area2D) -> void:
-  if(area.get_class()!="TowerRange"):
-    set_health(hp - 3)
-    area.queue_free()
+	if area.get_class() != "TowerRange":
+		set_health(hp - 3)
+		area.queue_free()
 
 
 ##########
