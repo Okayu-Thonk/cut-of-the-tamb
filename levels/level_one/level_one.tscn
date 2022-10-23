@@ -208,6 +208,9 @@ position = Vector2( 156, 68 )
 
 [node name="Character" parent="YSort" index="0" instance=ExtResource( 5 )]
 
+[node name="Label" parent="GameOver/Control/VBoxContainer" index="0"]
+text = "You tried your best, but it must come to an end"
+
 [node name="Control" parent="Warning" index="0"]
 mouse_filter = 2
 

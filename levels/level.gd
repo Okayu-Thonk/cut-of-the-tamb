@@ -50,6 +50,7 @@ func _on_StageTimer_timeout() -> void:
 
 
 func _on_gameover() -> void:
+	print("pog")
 	if win_layer.visible == false:
 		game_over_layer.visible = true
 
