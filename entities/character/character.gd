@@ -263,12 +263,16 @@ func _on_faith_generated(faith_generated_count: int) -> void:
 	faith += faith_generated_count
 	if faith < 150:
 		weapon_container.get_node("BuildTower").place_color = Color.red
+	else:
+		weapon_container.get_node("BuildTower").place_color = Color.green
+	if faith < 300:
 		weapon_container.get_node("BuildTower2").place_color = Color.red
+	else:
+		weapon_container.get_node("BuildTower2").place_color = Color.green
+	if faith < 250:
 		weapon_container.get_node("BuildTower3").place_color = Color.red
 		weapon_container.get_node("BuildTower4").place_color = Color.red
 	else:
-		weapon_container.get_node("BuildTower").place_color = Color.green
-		weapon_container.get_node("BuildTower2").place_color = Color.green
 		weapon_container.get_node("BuildTower3").place_color = Color.green
 		weapon_container.get_node("BuildTower4").place_color = Color.green
 	faith_label.text = "Faith: " + var2str(faith)
