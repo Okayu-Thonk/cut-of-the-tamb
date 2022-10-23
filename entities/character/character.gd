@@ -35,28 +35,8 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("1"):
-		selected_weapon = 1
-		weapon_container.get_node("Tambourine").visible = true
-		weapon_container.get_node("BuildTower").visible = false
-		tambourine_outline.visible = true
-		hammer_outline.visible = false
-	elif event.is_action_pressed("2"):
-		selected_weapon = 2
-		weapon_container.get_node("Tambourine").visible = false
-		weapon_container.get_node("BuildTower").visible = true
-		tambourine_outline.visible = false
-		hammer_outline.visible = true
-	if event.is_action_pressed("attack"):
-		if selected_weapon == 2 and faith >= 150:
-			faith -= 150
-			weapon_container.get_node("BuildTower").light_attack(
-				weapon_container.get_node("BuildTower/Sprite").global_position
-			)
-		elif selected_weapon == 2 and faith <150:
-			Ui.send_notif("Not Enough Faith bosq", global_position)
-		elif selected_weapon == 1:
-			weapon_container.get_node("Tambourine").light_attack()
+	_listen_to_weapon_change(event)
+	_listen_to_attack(event)
 	_listen_to_input_direction(event)
 
 
@@ -80,7 +60,7 @@ func _get_input_direction() -> Vector2:
 	return input_direction
 
 
-func _listen_to_input_direction(event) -> void:
+func _listen_to_input_direction(event: InputEvent) -> void:
 	if event.is_action_pressed("up"):
 		movement_key["up"] = true
 	if event.is_action_pressed("down"):
@@ -104,16 +84,46 @@ func _listen_to_input_direction(event) -> void:
 ##########
 
 
-func _on_Hurtbox_area_entered(area: Area2D):
-	if area.get_class() == "Projectile":
-		set_hp(hp - area.damage)
-
-
 func set_hp(new_hp: int) -> void:
 	hp = new_hp
 	if hp <= 0:
 		visible = false
 		GlobalSignal.emit_signal("player_died")
+	_init_ui()
+
+
+func _on_Hurtbox_area_entered(area: Area2D) -> void:
+	if area.get_class() == "Projectile":
+		set_hp(hp - area.damage)
+
+# Not the best way of doing it but since we have a finite amount of weapon
+# It's acceptable
+func _listen_to_weapon_change(event: InputEvent):
+	if event.is_action_pressed("1"):
+		selected_weapon = 1
+		weapon_container.get_node("Tambourine").visible = true
+		weapon_container.get_node("BuildTower").visible = false
+		tambourine_outline.visible = true
+		hammer_outline.visible = false
+	elif event.is_action_pressed("2"):
+		selected_weapon = 2
+		weapon_container.get_node("Tambourine").visible = false
+		weapon_container.get_node("BuildTower").visible = true
+		tambourine_outline.visible = false
+		hammer_outline.visible = true
+
+
+func _listen_to_attack(event: InputEvent):
+	if event.is_action_pressed("attack"):
+		if selected_weapon == 2 and faith >= 150:
+			faith -= 150
+			weapon_container.get_node("BuildTower").light_attack(
+				weapon_container.get_node("BuildTower/Sprite").global_position
+			)
+		elif selected_weapon == 2 and faith < 150:
+			Ui.send_notif("Not Enough Faith bosq", global_position)
+		elif selected_weapon == 1:
+			weapon_container.get_node("Tambourine").light_attack()
 
 
 ##########

@@ -17,16 +17,15 @@ signal ritual_coordinate_sent(coord)
 # Used For:
 # send coordinate to enemy
 
-# Emitted by: enemies 
+# Emitted by: enemies
 signal enemy_spawned(type)
 # Used For:
 # requesting ritual coordinate to level.gd
 
-# Emitted by: enemies 
+# Emitted by: enemies
 signal enemy_killed
 # Used For:
 
 # Emitted by: character
 signal player_died
 # Used For: ending the game
-

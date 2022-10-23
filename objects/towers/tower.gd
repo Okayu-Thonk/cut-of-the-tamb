@@ -22,9 +22,9 @@ func _on_AttackInterval_timeout() -> void:
 
 
 func _on_Range_body_entered(body: Node):
-  if body.get_class()!="Character":
-    enemies.append(body)
+	if body.get_class() != "Character":
+		enemies.append(body)
 
 
 func _on_Range_body_exited(body: Node):
-  enemies.erase(body)
+	enemies.erase(body)
