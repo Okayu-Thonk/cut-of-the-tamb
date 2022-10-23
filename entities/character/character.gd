@@ -23,7 +23,7 @@ onready var hammer_outline4: TextureRect = get_node("%OutlineH4")
 var movement_key: Dictionary = {"up": false, "down": false, "left": false, "right": false}
 var is_attack_hold: bool = false
 var velocity: Vector2 = Vector2.ZERO
-var faith: int = 1000
+var faith: int = 150
 
 var selected_weapon: int = 1
 
@@ -182,26 +182,26 @@ func _listen_to_build_input(event: InputEvent) -> void:
 			)
 		elif selected_weapon == 2 and faith < 150:
 			Ui.send_notif("Not Enough Faith", global_position)
-		if selected_weapon == 3 and faith >= 150:
-			faith -= 150
+		if selected_weapon == 3 and faith >= 300:
+			faith -= 300
 			weapon_container.get_node("BuildTower2").light_attack(
 				weapon_container.get_node("BuildTower2/Sprite").global_position
 			)
-		elif selected_weapon == 3 and faith < 150:
+		elif selected_weapon == 3 and faith < 300:
 			Ui.send_notif("Not Enough Faith", global_position)
-		if selected_weapon == 4 and faith >= 150:
-			faith -= 150
+		if selected_weapon == 4 and faith >= 250:
+			faith -= 250
 			weapon_container.get_node("BuildTower3").light_attack(
 				weapon_container.get_node("BuildTower/Sprite").global_position
 			)
-		elif selected_weapon == 4 and faith < 150:
+		elif selected_weapon == 4 and faith <250:
 			Ui.send_notif("Not Enough Faith", global_position)
-		if selected_weapon == 5 and faith >= 150:
-			faith -= 150
+		if selected_weapon == 5 and faith >= 250:
+			faith -= 250
 			weapon_container.get_node("BuildTower4").light_attack(
 				weapon_container.get_node("BuildTower/Sprite").global_position
 			)
-		elif selected_weapon == 5 and faith < 150:
+		elif selected_weapon == 5 and faith < 250:
 			Ui.send_notif("Not Enough Faith", global_position)
 
 func _listen_to_attack_input(event: InputEvent) -> void:
