@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://levels/level.gd" type="Script" id=1]
 [ext_resource path="res://assets/theme.tres" type="Theme" id=2]
 [ext_resource path="res://objects/ritual/ritual.tscn" type="PackedScene" id=3]
 [ext_resource path="res://levels/warning.png" type="Texture" id=4]
+[ext_resource path="res://levels/bgm.wav" type="AudioStream" id=5]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 1 )
@@ -41,26 +42,27 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
+margin_left = -71.5
+margin_top = -20.5
+margin_right = 71.5
+margin_bottom = 20.5
 
 [node name="Label" type="Label" parent="GameOver/Control/VBoxContainer"]
-margin_right = 40.0
+margin_right = 143.0
 margin_bottom = 7.0
-text = "You Failed"
+text = "You tried your best, but it must come to and end"
 align = 1
 
 [node name="ContinueButton" type="Button" parent="GameOver/Control/VBoxContainer"]
 margin_top = 11.0
-margin_right = 40.0
+margin_right = 143.0
 margin_bottom = 24.0
 text = "Retry"
 
 [node name="ExitButton" type="Button" parent="GameOver/Control/VBoxContainer"]
+visible = false
 margin_top = 28.0
-margin_right = 40.0
+margin_right = 143.0
 margin_bottom = 41.0
 text = "Exit"
 
@@ -157,8 +159,7 @@ margin_right = 8.0
 texture = ExtResource( 4 )
 
 [node name="StageTimer" type="Timer" parent="."]
-wait_time = 120.0
-one_shot = true
+wait_time = 30.0
 autostart = true
 
 [node name="SpawnTimer" type="Timer" parent="."]
@@ -169,7 +170,7 @@ one_shot = true
 autostart = true
 
 [node name="WaveDuration" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 10.0
 one_shot = true
 
 [node name="North" type="Node2D" parent="."]
@@ -180,6 +181,11 @@ one_shot = true
 
 [node name="South" type="Node2D" parent="."]
 
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+autoplay = true
+
+[connection signal="pressed" from="GameOver/Control/VBoxContainer/ContinueButton" to="." method="_on_ContinueButton_pressed"]
 [connection signal="timeout" from="StageTimer" to="." method="_on_StageTimer_timeout"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
 [connection signal="timeout" from="WaveTimer" to="." method="_on_WaveTimer_timeout"]

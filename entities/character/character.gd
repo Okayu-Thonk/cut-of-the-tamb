@@ -16,11 +16,14 @@ onready var hp_label: Label = $CanvasLayer/Control/Container/HpLabel
 onready var weapon_container: Node2D = $Weapon
 onready var tambourine_outline: TextureRect = get_node("%OutlineT")
 onready var hammer_outline: TextureRect = get_node("%OutlineH")
+onready var hammer_outline2: TextureRect = get_node("%OutlineH2")
+onready var hammer_outline3: TextureRect = get_node("%OutlineH3")
+onready var hammer_outline4: TextureRect = get_node("%OutlineH4")
 
 var movement_key: Dictionary = {"up": false, "down": false, "left": false, "right": false}
 var is_attack_hold: bool = false
 var velocity: Vector2 = Vector2.ZERO
-var faith: int = 0
+var faith: int = 150
 
 var selected_weapon: int = 1
 
@@ -33,13 +36,14 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_move(delta)
 	_sprite_handler()
+	_listen_to_attack()
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	_listen_to_weapon_change(event)
 	_listen_to_attack_input(event)
 	_listen_to_input_direction(event)
-	_listen_to_attack()
+	_listen_to_build_input(event)
 
 
 ############
@@ -96,7 +100,8 @@ func set_hp(new_hp: int) -> void:
 
 func _on_Hurtbox_area_entered(area: Area2D) -> void:
 	if area.get_class() == "Projectile":
-		set_hp(hp - area.damage)
+		if area.damage != null:
+			set_hp(hp - area.damage)
 
 # Not the best way of doing it but since we have a finite amount of weapon
 # It's acceptable
@@ -105,18 +110,71 @@ func _listen_to_weapon_change(event: InputEvent):
 		selected_weapon = 1
 		weapon_container.get_node("Tambourine").visible = true
 		weapon_container.get_node("BuildTower").visible = false
+		weapon_container.get_node("BuildTower2").visible = false
+		weapon_container.get_node("BuildTower3").visible = false
+		weapon_container.get_node("BuildTower4").visible = false
 		tambourine_outline.visible = true
 		hammer_outline.visible = false
+		hammer_outline2.visible = false
+		hammer_outline3.visible = false
+		hammer_outline4.visible = false
 	elif event.is_action_pressed("2"):
 		selected_weapon = 2
 		weapon_container.get_node("Tambourine").visible = false
 		weapon_container.get_node("BuildTower").visible = true
+		weapon_container.get_node("BuildTower2").visible = false
+		weapon_container.get_node("BuildTower3").visible = false
+		weapon_container.get_node("BuildTower4").visible = false
 		tambourine_outline.visible = false
 		hammer_outline.visible = true
+		hammer_outline2.visible = false
+		hammer_outline3.visible = false
+		hammer_outline4.visible = false
+	elif event.is_action_pressed("3"):
+		weapon_container.get_node("Tambourine").visible = false
+		weapon_container.get_node("BuildTower").visible = false
+		weapon_container.get_node("BuildTower2").visible = true
+		weapon_container.get_node("BuildTower3").visible = false
+		weapon_container.get_node("BuildTower4").visible = false
+		tambourine_outline.visible = false
+		hammer_outline.visible = false
+		hammer_outline2.visible = true
+		hammer_outline3.visible = false
+		hammer_outline4.visible = false
+		selected_weapon = 3
+	elif event.is_action_pressed("4"):
+		weapon_container.get_node("Tambourine").visible = false
+		weapon_container.get_node("BuildTower").visible = false
+		weapon_container.get_node("BuildTower2").visible = false
+		weapon_container.get_node("BuildTower3").visible = true
+		weapon_container.get_node("BuildTower4").visible = false
+		tambourine_outline.visible = false
+		hammer_outline.visible = false
+		hammer_outline2.visible = false
+		hammer_outline3.visible = true
+		hammer_outline4.visible = false
+		selected_weapon = 4
+	elif event.is_action_pressed("5"):
+		weapon_container.get_node("Tambourine").visible = false
+		weapon_container.get_node("BuildTower").visible = false
+		weapon_container.get_node("BuildTower2").visible = false
+		weapon_container.get_node("BuildTower3").visible = false
+		weapon_container.get_node("BuildTower4").visible = true
+		tambourine_outline.visible = false
+		hammer_outline.visible = false
+		hammer_outline2.visible = false
+		hammer_outline3.visible = false
+		hammer_outline4.visible = true
+		selected_weapon = 5
 
 
 func _listen_to_attack() -> void:
 	if is_attack_hold:
+		if selected_weapon == 1:
+			weapon_container.get_node("Tambourine").light_attack()
+
+func _listen_to_build_input(event: InputEvent) -> void:
+	if event.is_action_pressed("attack"):
 		if selected_weapon == 2 and faith >= 150:
 			faith -= 150
 			weapon_container.get_node("BuildTower").light_attack(
@@ -124,11 +182,29 @@ func _listen_to_attack() -> void:
 			)
 		elif selected_weapon == 2 and faith < 150:
 			Ui.send_notif("Not Enough Faith", global_position)
-		elif selected_weapon == 1:
-			weapon_container.get_node("Tambourine").light_attack()
+		if selected_weapon == 3 and faith >= 300:
+			faith -= 300
+			weapon_container.get_node("BuildTower2").light_attack(
+				weapon_container.get_node("BuildTower2/Sprite").global_position
+			)
+		elif selected_weapon == 3 and faith < 300:
+			Ui.send_notif("Not Enough Faith", global_position)
+		if selected_weapon == 4 and faith >= 250:
+			faith -= 250
+			weapon_container.get_node("BuildTower3").light_attack(
+				weapon_container.get_node("BuildTower/Sprite").global_position
+			)
+		elif selected_weapon == 4 and faith <250:
+			Ui.send_notif("Not Enough Faith", global_position)
+		if selected_weapon == 5 and faith >= 250:
+			faith -= 250
+			weapon_container.get_node("BuildTower4").light_attack(
+				weapon_container.get_node("BuildTower/Sprite").global_position
+			)
+		elif selected_weapon == 5 and faith < 250:
+			Ui.send_notif("Not Enough Faith", global_position)
 
-
-func _listen_to_attack_input(event: InputEvent):
+func _listen_to_attack_input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack"):
 		is_attack_hold = true
 	elif event.is_action_released("attack"):
@@ -187,6 +263,12 @@ func _on_faith_generated(faith_generated_count: int) -> void:
 	faith += faith_generated_count
 	if faith < 150:
 		weapon_container.get_node("BuildTower").place_color = Color.red
+		weapon_container.get_node("BuildTower2").place_color = Color.red
+		weapon_container.get_node("BuildTower3").place_color = Color.red
+		weapon_container.get_node("BuildTower4").place_color = Color.red
 	else:
 		weapon_container.get_node("BuildTower").place_color = Color.green
+		weapon_container.get_node("BuildTower2").place_color = Color.green
+		weapon_container.get_node("BuildTower3").place_color = Color.green
+		weapon_container.get_node("BuildTower4").place_color = Color.green
 	faith_label.text = "Faith: " + var2str(faith)

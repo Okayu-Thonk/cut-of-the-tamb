@@ -36,11 +36,11 @@ func _on_FaithTimer_timeout() -> void:
 
 
 func _on_enemy_spawned(type: String) -> void:
-	print("enemy spawned" + type)
 	GlobalSignal.emit_signal("ritual_coordinate_sent", self.global_position)
 
 
 func _on_Hurtbox_area_entered(area: Area2D) -> void:
 	if area.get_class() == "Projectile":
-		set_health(health - 10)
-		area.queue_free()
+		set_health(health - area.damage)
+		if !area.has_method("melee"):
+			area.queue_free()

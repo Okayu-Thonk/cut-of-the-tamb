@@ -1,13 +1,16 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://entities/character/character.gd" type="Script" id=1]
-[ext_resource path="res://entities/character/character.png" type="Texture" id=2]
+[ext_resource path="res://entities/character/cultist.png" type="Texture" id=2]
 [ext_resource path="res://assets/theme.tres" type="Theme" id=3]
 [ext_resource path="res://objects/weapons/tambourine/tambourine.tscn" type="PackedScene" id=4]
 [ext_resource path="res://objects/weapons/build_tower/build_tower.tscn" type="PackedScene" id=5]
 [ext_resource path="res://objects/weapons/build_tower/hammer.png" type="Texture" id=6]
 [ext_resource path="res://objects/weapons/tambourine/tambourine.png" type="Texture" id=7]
 [ext_resource path="res://objects/weapons/outline.png" type="Texture" id=8]
+[ext_resource path="res://objects/towers/clarinet/clarinet_tower.tscn" type="PackedScene" id=9]
+[ext_resource path="res://objects/towers/trombone/trombone_tower.tscn" type="PackedScene" id=10]
+[ext_resource path="res://objects/towers/flute/flute_tower.tscn" type="PackedScene" id=11]
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 5.09902
@@ -36,7 +39,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, 9 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -50,10 +53,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2, 3 ]
+"values": [ 0, 1 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Weapon:position")
@@ -62,10 +65,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ Vector2( 0, 0 ), Vector2( 0, 1 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, 9 ), Vector2( 0, 8 ) ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -79,10 +82,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 4, 5, 6, 7 ]
+"values": [ 2, 3 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Weapon:position")
@@ -91,10 +94,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ Vector2( 0, 0 ), Vector2( 0, 1 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, 9 ), Vector2( 0, 10 ) ]
 }
 
 [sub_resource type="RectangleShape2D" id=6]
@@ -111,7 +114,7 @@ acceleration = 300
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
-hframes = 24
+hframes = 4
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 3 )
@@ -123,12 +126,6 @@ autoplay = "idle"
 anims/RESET = SubResource( 2 )
 anims/idle = SubResource( 3 )
 anims/move = SubResource( 5 )
-
-[node name="Camera" type="Camera2D" parent="."]
-current = true
-zoom = Vector2( 1.7, 1.7 )
-smoothing_enabled = true
-smoothing_speed = 8.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -168,7 +165,7 @@ text = "Faith: 0"
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -40.0
+margin_left = -96.0
 margin_bottom = 16.0
 
 [node name="Tambourine" type="ColorRect" parent="CanvasLayer/Control/HBoxContainer"]
@@ -204,6 +201,7 @@ rect_min_size = Vector2( 16, 16 )
 color = Color( 0.270588, 0.266667, 0.415686, 1 )
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/Hammer"]
+modulate = Color( 0.380392, 0.458824, 1, 1 )
 texture = ExtResource( 6 )
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/HBoxContainer/Hammer"]
@@ -222,12 +220,114 @@ margin_right = 40.0
 margin_bottom = 40.0
 texture = ExtResource( 8 )
 
+[node name="Hammer2" type="ColorRect" parent="CanvasLayer/Control/HBoxContainer"]
+margin_left = 40.0
+margin_right = 56.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+color = Color( 0.270588, 0.266667, 0.415686, 1 )
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/Hammer2"]
+modulate = Color( 1, 0.870588, 0.470588, 1 )
+texture = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/HBoxContainer/Hammer2"]
+margin_right = 16.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+text = "3"
+valign = 2
+
+[node name="OutlineH2" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/Hammer2"]
+unique_name_in_owner = true
+visible = false
+margin_left = -1.0
+margin_top = -1.0
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 8 )
+
+[node name="Hammer3" type="ColorRect" parent="CanvasLayer/Control/HBoxContainer"]
+margin_left = 60.0
+margin_right = 76.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+color = Color( 0.270588, 0.266667, 0.415686, 1 )
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/Hammer3"]
+modulate = Color( 0.941176, 1, 0, 1 )
+texture = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/HBoxContainer/Hammer3"]
+margin_right = 16.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+text = "4"
+valign = 2
+
+[node name="OutlineH3" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/Hammer3"]
+unique_name_in_owner = true
+visible = false
+margin_left = -1.0
+margin_top = -1.0
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 8 )
+
+[node name="Hammer4" type="ColorRect" parent="CanvasLayer/Control/HBoxContainer"]
+margin_left = 80.0
+margin_right = 96.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+color = Color( 0.270588, 0.266667, 0.415686, 1 )
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/Hammer4"]
+texture = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/HBoxContainer/Hammer4"]
+margin_right = 16.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+text = "5"
+valign = 2
+
+[node name="OutlineH4" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/Hammer4"]
+unique_name_in_owner = true
+visible = false
+margin_left = -1.0
+margin_top = -1.0
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 8 )
+
 [node name="Weapon" type="Node2D" parent="."]
+position = Vector2( 0, 9 )
 
 [node name="Tambourine" parent="Weapon" instance=ExtResource( 4 )]
 
 [node name="BuildTower" parent="Weapon" instance=ExtResource( 5 )]
 visible = false
+tower = ExtResource( 9 )
+
+[node name="Sprite" parent="Weapon/BuildTower/Container" index="0"]
+modulate = Color( 0.380392, 0.505882, 1, 1 )
+
+[node name="BuildTower2" parent="Weapon" instance=ExtResource( 5 )]
+visible = false
+
+[node name="Sprite" parent="Weapon/BuildTower2/Container" index="0"]
+modulate = Color( 1, 0.72549, 0.298039, 1 )
+
+[node name="BuildTower3" parent="Weapon" instance=ExtResource( 5 )]
+visible = false
+tower = ExtResource( 10 )
+
+[node name="Sprite" parent="Weapon/BuildTower3/Container" index="0"]
+modulate = Color( 0.968627, 1, 0.054902, 1 )
+
+[node name="BuildTower4" parent="Weapon" instance=ExtResource( 5 )]
+visible = false
+tower = ExtResource( 11 )
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_mask = 4
@@ -235,4 +335,19 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource( 6 )
 
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 1.7, 1.7 )
+smoothing_enabled = true
+smoothing_speed = 9.0
+
+[node name="Label" type="Label" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+
+[editable path="Weapon/BuildTower"]
+[editable path="Weapon/BuildTower2"]
+[editable path="Weapon/BuildTower3"]
