@@ -30,7 +30,7 @@ position = Vector2( 0, -1 )
 shape = SubResource( 1 )
 
 [node name="AttackInterval" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.5
 autostart = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

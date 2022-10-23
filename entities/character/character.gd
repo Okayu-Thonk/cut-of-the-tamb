@@ -18,6 +18,7 @@ onready var tambourine_outline: TextureRect = get_node("%OutlineT")
 onready var hammer_outline: TextureRect = get_node("%OutlineH")
 
 var movement_key: Dictionary = {"up": false, "down": false, "left": false, "right": false}
+var is_attack_hold: bool = false
 var velocity: Vector2 = Vector2.ZERO
 var faith: int = 0
 
@@ -36,8 +37,9 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	_listen_to_weapon_change(event)
-	_listen_to_attack(event)
+	_listen_to_attack_input(event)
 	_listen_to_input_direction(event)
+	_listen_to_attack()
 
 
 ############
@@ -113,17 +115,25 @@ func _listen_to_weapon_change(event: InputEvent):
 		hammer_outline.visible = true
 
 
-func _listen_to_attack(event: InputEvent):
-	if event.is_action_pressed("attack"):
+func _listen_to_attack() -> void:
+	if is_attack_hold:
 		if selected_weapon == 2 and faith >= 150:
 			faith -= 150
 			weapon_container.get_node("BuildTower").light_attack(
 				weapon_container.get_node("BuildTower/Sprite").global_position
 			)
 		elif selected_weapon == 2 and faith < 150:
-			Ui.send_notif("Not Enough Faith bosq", global_position)
+			Ui.send_notif("Not Enough Faith", global_position)
 		elif selected_weapon == 1:
 			weapon_container.get_node("Tambourine").light_attack()
+
+
+func _listen_to_attack_input(event: InputEvent):
+	if event.is_action_pressed("attack"):
+		is_attack_hold = true
+	elif event.is_action_released("attack"):
+		is_attack_hold = false
+
 
 
 ##########
