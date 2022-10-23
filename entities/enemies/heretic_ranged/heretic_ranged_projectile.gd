@@ -1,7 +1,7 @@
 extends Area2D
 class_name SingleTarget
 
-export var damage: int
+export var damage: int = 5
 export var speed: int = 200
 export var knockback_strength: float
 

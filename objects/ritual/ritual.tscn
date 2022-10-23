@@ -1,11 +1,141 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/theme.tres" type="Theme" id=1]
 [ext_resource path="res://objects/ritual/ritual.gd" type="Script" id=2]
 [ext_resource path="res://objects/ritual/altar.png" type="Texture" id=3]
+[ext_resource path="res://assets/light.png" type="Texture" id=4]
+[ext_resource path="res://entities/character/cultist.png" type="Texture" id=5]
+[ext_resource path="res://objects/weapons/tambourine/tambourine.png" type="Texture" id=6]
+[ext_resource path="res://objects/ritual/Hurtbox.gd" type="Script" id=7]
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite3:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite4:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite5:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "pray"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite3:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite4:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite5:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 46.2709
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.987097 )
+colors = PoolColorArray( 0.195312, 0.896271, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=4]
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 108.26
+gravity = Vector3( 0, -98, 0 )
+initial_velocity = 45.25
+initial_velocity_random = 0.22
+angular_velocity_random = 0.36
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 1.12
+radial_accel = 55.45
+damping = 100.0
+color_ramp = SubResource( 3 )
 
 [node name="Ritual" type="Node2D"]
 script = ExtResource( 2 )
@@ -14,6 +144,9 @@ script = ExtResource( 2 )
 texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "pray"
+anims/RESET = SubResource( 5 )
+anims/pray = SubResource( 6 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -49,9 +182,65 @@ max_value = 10000.0
 autostart = true
 
 [node name="Hurtbox" type="Area2D" parent="."]
+script = ExtResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource( 1 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( -40, -4 )
+amount = 25
+process_material = SubResource( 4 )
+
+[node name="Particles2D2" type="Particles2D" parent="."]
+position = Vector2( 39, -5 )
+amount = 25
+process_material = SubResource( 4 )
+
+[node name="Particles2D3" type="Particles2D" parent="."]
+position = Vector2( -3, -31 )
+amount = 25
+process_material = SubResource( 4 )
+
+[node name="Particles2D4" type="Particles2D" parent="."]
+position = Vector2( -1, 25 )
+amount = 25
+process_material = SubResource( 4 )
+
+[node name="Particles2D5" type="Particles2D" parent="."]
+position = Vector2( 0, 1 )
+amount = 50
+process_material = SubResource( 4 )
+
+[node name="Light2D" type="Light2D" parent="."]
+texture = ExtResource( 4 )
+color = Color( 0.270588, 0.560784, 0.976471, 1 )
+energy = 0.83
+
+[node name="Sprite2" type="Sprite" parent="."]
+position = Vector2( -55, -12 )
+texture = ExtResource( 5 )
+hframes = 4
+
+[node name="Sprite3" type="Sprite" parent="."]
+position = Vector2( 0, -54 )
+texture = ExtResource( 5 )
+hframes = 4
+
+[node name="Sprite4" type="Sprite" parent="."]
+position = Vector2( 54, -11 )
+scale = Vector2( -1, 1 )
+texture = ExtResource( 5 )
+hframes = 4
+
+[node name="Sprite5" type="Sprite" parent="."]
+position = Vector2( 0, 37 )
+scale = Vector2( -1, 1 )
+texture = ExtResource( 5 )
+hframes = 4
+
+[node name="Tambourine" type="Sprite" parent="."]
+texture = ExtResource( 6 )
 
 [connection signal="timeout" from="FaithTimer" to="." method="_on_FaithTimer_timeout"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]

@@ -24,10 +24,15 @@ onready var warning_bottom: TextureRect = $Warning/Control/WarningBottom
 var spawn_locations: Array
 var spawn_location: Node2D
 
+
 var enemies: Array = [
 	preload("res://entities/enemies/heretic_ranged/heretic_ranged.tscn"),
-	preload("res://entities/enemies/heretic_ranged/heretic_ranged.tscn")
+	preload("res://entities/enemies/heretic_melee/heretic_melee.tscn"),
+	preload("res://entities/enemies/big_boye/big_boye.tscn"),
+	preload("res://entities/enemies/fast_boye/fast_boye.tscn"),
 ]
+
+
 
 
 func _ready() -> void:
@@ -40,8 +45,8 @@ func _ready() -> void:
 
 
 func _on_StageTimer_timeout() -> void:
-	if game_over_layer.visible == false:
-		win_layer.visible = true
+	wave_duration_timer.wait_time *= 2
+	spawn_timer.wait_time /= 2
 
 
 func _on_gameover() -> void:
@@ -51,7 +56,18 @@ func _on_gameover() -> void:
 
 func _on_SpawnTimer_timeout() -> void:
 	# TOOD: Randomly pick enemy
-	var enemy = enemies[0].instance()
+	var random = randi() % enemies.size()
+	if random == 3:
+		var enemy = enemies[random].instance()
+		enemy.global_position = spawn_location.global_position + Vector2(0, -10)
+		$YSort.add_child(enemy)
+		var enemy2 = enemies[random].instance()
+		enemy2.global_position = spawn_location.global_position + Vector2(0, 10)
+		$YSort.add_child(enemy2)
+		var enemy3 = enemies[random].instance()
+		enemy3.global_position = spawn_location.global_position + Vector2(5, 10)
+		$YSort.add_child(enemy3)
+	var enemy = enemies[random].instance()
 	enemy.global_position = spawn_location.global_position
 	$YSort.add_child(enemy)
 
@@ -84,3 +100,7 @@ func _on_WaveTimer_timeout() -> void:
 func _on_WaveDuration_timeout() -> void:
 	wave_timer.start()
 	spawn_timer.stop()
+
+
+func _on_ContinueButton_pressed():
+	get_tree().reload_current_scene()

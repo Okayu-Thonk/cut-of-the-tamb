@@ -10,9 +10,9 @@ enum State {
 }
 
 export var friction: float = 0.7
-export var acceleration: int = 100
+export var acceleration: int = 230
 export var projectile: PackedScene
-export var hp: int = 10 setget set_health
+export var hp: int = 15 setget set_health
 
 onready var sprite: Sprite = $Sprite
 onready var weapon: Node2D = $Weapon
@@ -72,7 +72,14 @@ func _on_AttackTimer_timeout() -> void:
 func _on_Area2D_area_entered(area: Area2D) -> void:
 	if area.get_class() != "TowerRange":
 		set_health(hp - 3)
+		_blink_red()
 		area.queue_free()
+
+
+func _blink_red() -> void:
+		sprite.modulate = Color.red
+		yield(get_tree().create_timer(0.1), "timeout")
+		sprite.modulate = Color.white
 
 
 ##########

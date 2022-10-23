@@ -10,9 +10,24 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "KinematicBody2D",
+"class": "BigBoye",
+"language": "GDScript",
+"path": "res://entities/enemies/big_boye/big_boye.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "Character",
 "language": "GDScript",
 "path": "res://entities/character/character.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "FastBoye",
+"language": "GDScript",
+"path": "res://entities/enemies/fast_boye/fast_boye.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "HereticMelee",
+"language": "GDScript",
+"path": "res://entities/enemies/heretic_melee/heretic_melee.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "HereticRanged",
@@ -55,7 +70,10 @@ _global_script_classes=[ {
 "path": "res://objects/towers/tower_projectile.gd"
 } ]
 _global_script_class_icons={
+"BigBoye": "",
 "Character": "",
+"FastBoye": "",
+"HereticMelee": "",
 "HereticRanged": "",
 "Level": "",
 "Ritual": "",
@@ -149,6 +167,21 @@ attack={
 2={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":50,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+3={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":51,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+4={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":52,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+5={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":53,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 
